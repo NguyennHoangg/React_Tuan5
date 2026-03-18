@@ -1,7 +1,4 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import './App.css'
 
 function App() {
@@ -14,19 +11,39 @@ function App() {
   useEffect(() => {
     async function fetchData() {
         const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-        const data = res.json();
+        const data = await res.json();
 
         setData(data);
-        console.log(data)
+        setFilterData(data);
     }
 
     fetchData();
-  }, [])
+  }, []);
+
+
+  useEffect(() =>{
+    console.log(search)
+    if(search===""){
+      setFilterData(data);
+    }else{
+      const result = data.filter((item) =>{
+      return item.title.toLowerCase().includes(search.toLowerCase());
+    })
+
+    setFilterData(result);
+    }
+  }, [data, search]);
+
 
 
   return (
     <>
-     {data.map((item) =>{
+    <input placeholder='search' value={search} type='text' onChange={(e) => setSearch(e.target.value)}></input>
+    <select>
+      <option value={search}>1</option>
+      <option>2</option>
+    </select>
+     {filterData.map((item) =>{
       return <div key={item.id}>
         <h2>{item.title}</h2>
         <h2>{item.body}</h2>
