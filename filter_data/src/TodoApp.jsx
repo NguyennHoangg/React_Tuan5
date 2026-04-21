@@ -67,7 +67,7 @@ export default function ToDoApp() {
             <ul style={styles.list}>
                 {todoList.map((todo) => (
                     <li key={todo.id} style={styles.item}>
-                        {todo.name}
+                        {todo.description}
                         {updateTodo.id === todo.id ? (
                             <>
                                 {/* Sửa công việc */}
